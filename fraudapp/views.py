@@ -58,7 +58,7 @@ class ChartsData(APIView):
         ) 
         s3 = session.client('s3')
         # Specify the bucket name and the key (file path within the bucket)
-        bucket_name = 'esse-fraudguard'
+        bucket_name = 'fraudguard-esse'
         key = 'dataset/dataset_with_labels.csv'
         # Get the object from S3
         response = s3.get_object(Bucket=bucket_name, Key=key)
@@ -338,7 +338,7 @@ class FileReaderAPIView(APIView):
             # print("S3 client created successfully")
 
             # Specify the bucket name and the key (file path within the bucket)
-            bucket_name = 'esse-fraudguard'
+            bucket_name = 'fraudguard-esse'
             key = 'dataset/encoded_data.csv'
 
             # Get the object from S3
@@ -400,7 +400,7 @@ def XGBoost_model(csv_row):
     # input_data = pd.DataFrame([csv_row])
     # print("Input data xg" , csv_row)
     # input_data_encoded = encode(input_data)
-    bucket_name = 'esse-fraudguard'
+    bucket_name = 'fraudguard-esse'
     key = 'ML_models/XGBoost_model.joblib'
     response = s3.get_object(Bucket=bucket_name, Key=key)
     model_bytes = response['Body'].read()
@@ -412,7 +412,7 @@ def RandomForest_model(csv_row):
     # input_data = pd.DataFrame([csv_row])
     # print("Input data xg" , csv_row)
 
-    bucket_name = 'esse-fraudguard'
+    bucket_name = 'fraudguard-esse'
     key = 'ML_models/RandomForest_model.joblib'
     response = s3.get_object(Bucket=bucket_name, Key=key)
     model_bytes = response['Body'].read()
@@ -423,7 +423,7 @@ def LogisticRegression_model(csv_row):
     # input_data = pd.DataFrame([csv_row])
     # print("Input data xg" , csv_row)
     # input_data_encoded = encode(input_data)
-    bucket_name = 'esse-fraudguard'
+    bucket_name = 'fraudguard-esse'
     key = 'ML_models/LogisticRegression_model.joblib'
     response = s3.get_object(Bucket=bucket_name, Key=key)
     model_bytes = response['Body'].read()
@@ -432,7 +432,7 @@ def LogisticRegression_model(csv_row):
     return prediction
 def LightGBM(csv_row):
     # print("Input data xg" , csv_row)
-    bucket_name = 'esse-fraudguard'
+    bucket_name = 'fraudguard-esse'
     key = 'ML_models/LightGBM_model.joblib'
     response = s3.get_object(Bucket=bucket_name, Key=key)
     model_bytes = response['Body'].read()
@@ -442,7 +442,7 @@ def LightGBM(csv_row):
 def decision_tree(csv_row):
     # input_data = pd.DataFrame([csv_row])
     # print("Input data xg" , csv_row)
-    bucket_name = 'esse-fraudguard'
+    bucket_name = 'fraudguard-esse'
     key = 'ML_models/DecisionTree_model.joblib'
     response = s3.get_object(Bucket=bucket_name, Key=key)
     model_bytes = response['Body'].read()
@@ -458,8 +458,8 @@ os.environ["AWS_SECRET_ACCESS_KEY"] = settings.AWS_SECRET_ACCESS_KEY
 s3=boto3.client('s3')
 file_path = f"/tmp"
 Path(file_path).mkdir(parents=True, exist_ok=True)
-s3.download_file(Bucket="esse-fraudguard", Key='RAG/index.faiss', Filename=f"{file_path}/my_faiss.faiss")
-s3.download_file(Bucket="esse-fraudguard", Key='RAG/index.pkl', Filename=f"{file_path}/my_faiss.pkl")
+s3.download_file(Bucket="fraudguard-esse", Key='RAG/index.faiss', Filename=f"{file_path}/my_faiss.faiss")
+s3.download_file(Bucket="fraudguard-esse", Key='RAG/index.pkl', Filename=f"{file_path}/my_faiss.pkl")
 bedrock_runtime = boto3.client("bedrock-runtime", "ca-central-1")  # ca-central-1
 bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0", client=bedrock_runtime)
 
@@ -540,7 +540,7 @@ class FrequencyAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         s3 = boto3.client('s3')
-        bucket_name = 'esse-fraudguard'
+        bucket_name = 'fraudguard-esse'
         key = 'dataset/dataset/dataset_with_labels.csv'
         
         try:
@@ -582,7 +582,7 @@ class multigraphsAPIView(APIView):
     region_name=settings.AWS_REGION
         )
         s3 = boto3.client('s3')
-        bucket_name = 'esse-fraudguard'
+        bucket_name = 'fraudguard-esse'
         key = 'dataset/dataset_with_labels.csv'
         
         try:
@@ -690,9 +690,9 @@ def load_embeddings():
     Path(file_path).mkdir(parents=True, exist_ok=True)
     
     # Download files from S3
-    s3.download_file(Bucket="esse-fraudguard", Key='train_list.pkl', Filename=f"{file_path}/train_list.pkl")
-    s3.download_file(Bucket="esse-fraudguard", Key='train_labels.pkl', Filename=f"{file_path}/train_labels.pkl")
-    s3.download_file(Bucket="esse-fraudguard", Key='embeddings_list (1).pkl', Filename=f"{file_path}/embeddings_list.pkl")
+    s3.download_file(Bucket="fraudguard-esse", Key='train_list.pkl', Filename=f"{file_path}/train_list.pkl")
+    s3.download_file(Bucket="fraudguard-esse", Key='train_labels.pkl', Filename=f"{file_path}/train_labels.pkl")
+    s3.download_file(Bucket="fraudguard-esse", Key='embeddings_list (1).pkl', Filename=f"{file_path}/embeddings_list.pkl")
     
     # Load downloaded files
     with open(f"{file_path}/train_list.pkl", 'rb') as f:
