@@ -493,12 +493,8 @@ def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 prompt = load_prompt()
 def json_to_paragraph(json_data):
-    paragraph = f"The loan with number {json_data['LoanNumber']} was approved on {json_data['DateApproved']} through the Small Business Administration (SBA) office with code {json_data['SBAOfficeCode']}, us>"
-    return paragraph
-
-def json_to_paragraph(json_data):
     paragraph = f"The loan with number {json_data['LoanNumber']} was approved on {json_data['DateApproved']} through the Small Business Administration (SBA) office with code {json_data['SBAOfficeCode']}, using the Processing Method {json_data['ProcessingMethod']}. The borrower, {json_data['BorrowerName']}, located at {json_data['BorrowerAddress']}, {json_data['BorrowerCity']}, {json_data['BorrowerState']} {json_data['BorrowerZip']}, saw its loan status marked as \"{json_data['LoanStatus']}\" on {json_data['LoanStatusDate']}, with a term of {json_data['Term']} months and a {json_data['SBAGuarantyPercentage']}% SBA guaranty percentage. The loan, initially approved at ${json_data['InitialApprovalAmount']}, maintained its current approval amount at the same value, with no undisbursed amounts. Classified as a {json_data['FranchiseName']}, the loan was serviced by {json_data['ServicingLenderName']}, situated at {json_data['ServicingLenderAddress']}, {json_data['ServicingLenderCity']}, {json_data['ServicingLenderState']} {json_data['ServicingLenderZip']}. The loan's rural-urban indicator was '{json_data['RuralUrbanIndicator']}', with no Hubzone or Low and Moderate Income (LMI) indicators. The business, {json_data['BusinessAgeDescription']}, operates in {json_data['ProjectCity']}, {json_data['ProjectState']} {json_data['ProjectZip']}, within the CD {json_data['CD']} area, reporting {json_data['JobsReported']} jobs and carrying a NAICS code of {json_data['NAICSCode']}. The borrower's race and ethnicity were {json_data['Race']} and {json_data['Ethnicity']}, respectively. While the loan proceeds were allocated predominantly to payroll (${json_data['PAYROLL_PROCEED']}), with minimal amounts designated to utilities, the forgiveness amount totaled ${json_data['ForgivenessAmount']}, granted on {json_data['ForgivenessDate']}, resulting in a forgiveness percentage of {json_data['ForgivenPercentage']}%. Despite slight discrepancies in approval and total proceeds, the loan demonstrated a positive impact, averaging ${json_data['PROCEED_Per_Job']} per job created or retained."
-
+    return paragraph
 def invoke_fun(query):
     try:
         data = query
