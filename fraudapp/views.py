@@ -469,7 +469,7 @@ llm = ChatBedrock(
     model_kwargs={"temperature": 0}
 )
 def load_knowledgeBase():
-    bedrock_runtime = boto3.client("bedrock-runtime", "eu-north-1")
+    bedrock_runtime = boto3.client("bedrock-runtime",settings.AWS_REGION)
     bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0",
                                        client=bedrock_runtime)
     db = FAISS.load_local(
@@ -704,7 +704,7 @@ def load_model_credentials():
     AWS_KEY = settings.AWS_ACCESS_KEY_ID
     AWS_SECRET_KEY = settings.AWS_SECRET_ACCESS_KEY
     bedrock = boto3.client(service_name='bedrock-runtime',
-    region_name='eu-north-1',
+    region_name=settings.AWS_REGION,
     aws_access_key_id=AWS_KEY,
     aws_secret_access_key=AWS_SECRET_KEY)
     bedrock_embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v1",
